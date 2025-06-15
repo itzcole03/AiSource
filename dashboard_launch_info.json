@@ -1,7 +1,0 @@
-{
-  "backend_port": 8002,
-  "frontend_port": 8502,
-  "backend_url": "http://localhost:8002",
-  "frontend_url": "http://localhost:8502",
-  "timestamp": 1749939244.2612836
-}
