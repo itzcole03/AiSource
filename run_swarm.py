@@ -22,13 +22,16 @@ logging.basicConfig(
 logger = logging.getLogger("SwarmLauncher")
 
 # Import our simple agents for quick testing
-from core.simple_agents import (
+from core.simple_agents_fixed import (
     SimpleOrchestratorAgent,
     SimpleArchitectAgent, 
     SimpleBackendAgent,
     SimpleFrontendAgent,
     SimpleQAAgent
 )
+
+# Import enhanced agent capabilities
+from working_agent_upgrade import dispatch_enhanced_task, dispatch_task_sync
 
 class SimpleSwarmRunner:
     def __init__(self):
@@ -135,11 +138,39 @@ class SimpleSwarmRunner:
                 logger.error(f"Task execution failed: {e}")
     
     async def run_agent_task(self, agent_name, task_type, context):
-        """Run a specific task for an agent"""
+        """Enhanced agent task with memory and retry logic"""
         agent = self.agents.get(agent_name)
         if not agent:
             return None
             
+        # Create descriptive task for enhanced agent
+        task_description = f"Perform {task_type} analysis on workspace: {context.get('workspace_path', 'current directory')}"
+        
+        try:
+            # Try enhanced agent first
+            logger.info(f"🚀 Running enhanced {agent_name} for {task_type}")
+            result = await dispatch_enhanced_task(agent_name, task_description, context)
+            
+            if result.get("success"):
+                logger.info(f"✅ Enhanced {agent_name} completed {task_type}")
+                return {
+                    "agent": agent_name,
+                    "summary": f"Enhanced {task_type} completed successfully",
+                    "result": result.get("result", "Task completed"),
+                    "plan": result.get("result", "Enhanced analysis provided")
+                }
+            else:
+                logger.warning(f"⚠️ Enhanced {agent_name} had issues, falling back to simple agent")
+                # Fallback to original agent logic
+                return await self._fallback_agent_task(agent, agent_name, task_type, context)
+                
+        except Exception as e:
+            logger.warning(f"Enhanced agent failed: {e}, using fallback")
+            # Fallback to original agent logic
+            return await self._fallback_agent_task(agent, agent_name, task_type, context)
+    
+    async def _fallback_agent_task(self, agent, agent_name, task_type, context):
+        """Fallback to original agent logic"""
         task = {
             "type": task_type,
             "workspace": context.get("workspace_path"),
@@ -149,11 +180,11 @@ class SimpleSwarmRunner:
         try:
             if hasattr(agent, 'process_task'):
                 result = await agent.process_task(task, context)
-                logger.info(f"{agent_name} completed {task_type}")
+                logger.info(f"{agent_name} completed {task_type} (fallback)")
                 return result
             elif hasattr(agent, 'handle_autonomous_task'):
                 result = await agent.handle_autonomous_task()
-                logger.info(f"{agent_name} completed autonomous task")
+                logger.info(f"{agent_name} completed autonomous task (fallback)")
                 return result
         except Exception as e:
             logger.warning(f"{agent_name} task failed: {e}")
