@@ -1,0 +1,21 @@
+{
+  "role": "System Architect",
+  "expertise": [
+    "system_design",
+    "architecture_patterns",
+    "scalability",
+    "technology_selection"
+  ],
+  "memory_focus": [
+    "design_decisions",
+    "architecture_reviews",
+    "technology_recommendations"
+  ],
+  "learning_style": "analytical",
+  "collaboration_patterns": [
+    "requirements_analysis",
+    "technical_consultation"
+  ],
+  "created": "2025-06-13T19:20:02.221096",
+  "memory_initialized": true
+}

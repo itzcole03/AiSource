@@ -1,0 +1,153 @@
+# Hybrid Configuration Example - Best of Both Worlds
+# This configuration balances local execution with cloud capabilities
+# Copy this file to hybrid_config.yaml for mixed local/cloud deployment
+
+# System Configuration
+system:
+  name: "Ultimate Copilot Hybrid"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"
+  deployment_mode: "hybrid"  # local, cloud, hybrid
+  fallback_enabled: true     # Auto-fallback to cloud on local failures
+
+# Smart Provider Routing
+routing:
+  # Route by task complexity
+  simple_tasks:
+    providers: ["ollama", "lm_studio"]  # Use local for simple tasks
+    models: ["llama3.2:3b", "codellama:7b"]
+    
+  complex_tasks:
+    providers: ["openai", "anthropic"]  # Use cloud for complex tasks
+    models: ["gpt-4o-mini", "claude-3-haiku-20240307"]
+    
+  code_tasks:
+    providers: ["ollama", "openai"]     # Prefer local codellama, fallback to GPT
+    models: ["codellama:7b", "gpt-4o-mini"]
+
+# Enhanced VRAM Management for Hybrid Mode
+vram:
+  max_usage_percentage: 75   # More conservative for hybrid workloads
+  warning_threshold: 65
+  cleanup_threshold: 80
+  model_rotation_enabled: true
+  hybrid_offloading: true    # Offload to cloud when VRAM constrained
+  cache_size_mb: 512        # Smaller cache for hybrid mode
+
+# Provider Configuration
+providers:
+  # Local Providers (Primary for cost efficiency)
+  ollama:
+    enabled: true
+    base_url: "http://localhost:11434"
+    models:
+      - "llama3.2:3b"      # Fast, lightweight
+      - "codellama:7b"     # Code specialist
+      - "mistral:7b"       # General purpose
+    priority: 1            # Highest priority
+    cost_per_token: 0.0    # Free local execution
+    
+  # Cloud Providers (Fallback and premium features)
+  openai:
+    enabled: true
+    api_key: "${OPENAI_API_KEY}"
+    models:
+      - "gpt-4o-mini"      # Cost-effective GPT-4
+      - "gpt-3.5-turbo"    # Legacy support
+    priority: 2
+    cost_per_token: 0.0015 # Input tokens
+    max_monthly_spend: 50  # Budget limit in USD
+    
+  anthropic:
+    enabled: true
+    api_key: "${ANTHROPIC_API_KEY}"
+    models:
+      - "claude-3-haiku-20240307"
+    priority: 3
+    cost_per_token: 0.00125
+    max_monthly_spend: 30
+
+# Intelligent Agent Routing
+agents:
+  orchestrator:
+    enabled: true
+    primary_provider: "ollama"
+    fallback_provider: "openai"
+    decision_threshold: 0.8  # Confidence threshold for local execution
+    
+  architect:
+    enabled: true
+    primary_provider: "ollama"
+    fallback_provider: "anthropic"
+    complex_task_threshold: 0.7
+    
+  backend:
+    enabled: true
+    primary_provider: "ollama"
+    fallback_provider: "openai"
+    
+  frontend:
+    enabled: true
+    primary_provider: "ollama"
+    fallback_provider: "openai"
+    
+  qa:
+    enabled: true
+    primary_provider: "ollama"
+    fallback_provider: "anthropic"
+
+# Cost Management
+cost_management:
+  enabled: true
+  daily_budget: 10.0       # USD per day
+  monthly_budget: 200.0    # USD per month
+  alert_threshold: 80      # Alert at 80% of budget
+  auto_throttle: true      # Throttle when approaching budget
+
+# Performance Optimization
+performance:
+  local_first: true        # Always try local providers first
+  latency_threshold: 5000  # Switch to cloud if local takes >5s
+  quality_threshold: 0.85  # Switch to cloud if local quality <85%
+  load_balancing: true     # Distribute load across providers
+
+# Advanced Features
+features:
+  smart_caching: true      # Cache responses to reduce costs
+  response_streaming: true # Stream responses for better UX
+  multi_model_consensus: false  # Use multiple models for critical decisions
+  auto_model_selection: true    # Auto-select best model for task
+  
+# Integration Settings (Same as basic config)
+integrations:
+  void_editor:
+    enabled: true
+    websocket_port: 8765
+    auto_connect: true
+    file_sync: true
+    
+  vscode:
+    enabled: true
+    extension_enabled: false
+    insiders_mode: true
+    
+  codegpt:
+    enabled: false
+    api_key: "${CODEGPT_API_KEY}"
+    marketplace_sync: false
+
+# Enhanced Monitoring
+monitoring:
+  cost_tracking: true
+  performance_metrics: true
+  provider_health: true
+  automatic_reports: true
+  report_interval: 86400   # Daily reports
+
+# Backup and Recovery
+backup:
+  enabled: true
+  interval: 3600          # Hourly backups
+  retention_days: 30
+  cloud_backup: false     # Set to true for cloud backup

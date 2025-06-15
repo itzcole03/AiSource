@@ -1,0 +1,222 @@
+# Hybrid Agent System Configuration Example
+# Copy this file to hybrid_config.yaml and customize for your environment
+
+# CodeGPT Configuration (OPTIONAL)
+# Note: CodeGPT free tier has severe limitations (3/30 requests)
+# Requires paid subscription for meaningful usage
+codegpt:
+  enabled: false  # Set to true only with paid subscription
+  api_key: "${CODEGPT_API_KEY}"  # Set in environment variables
+  org_id: "${CODEGPT_ORG_ID}"    # Set in environment variables
+  
+  # WARNING: Free tier limitations make this impractical for development
+  # Consider this integration only if you have a paid CodeGPT subscription
+  
+  # Agent mappings (configure with your actual CodeGPT agent IDs)
+  agents:
+    code_reviewer:
+      id: "your-code-review-agent-id"
+      name: "Code Review Expert"
+      description: "Specialized in code review and quality analysis"
+      capabilities: ["code_review", "security_analysis", "best_practices"]
+    
+    documentation_writer:
+      id: "your-docs-agent-id"
+      name: "Documentation Writer"
+      description: "Expert at creating technical documentation"
+      capabilities: ["documentation", "readme_generation", "api_docs"]
+    
+    qa_assistant:
+      id: "your-qa-agent-id"
+      name: "Q&A Assistant"
+      description: "Quick answers and explanations"
+      capabilities: ["quick_questions", "explanations", "troubleshooting"]
+
+# Hybrid routing configuration
+# NOTE: Custom agents are prioritized due to CodeGPT's usage limitations
+routing:
+  # Task types that COULD use CodeGPT agents (if enabled and quota available)
+  codegpt_tasks:
+    - "code_review"
+    - "documentation"
+    - "quick_questions"
+    - "syntax_help"
+    - "best_practices"
+    - "explanations"
+  
+  # Task types that ALWAYS use custom agents (recommended for all tasks)
+  custom_tasks:
+    - "project_orchestration"
+    - "multi_agent_coordination"
+    - "system_integration"
+    - "workflow_automation"
+    - "vram_optimization"
+    - "task_planning"
+    - "resource_allocation"
+    # Added these due to CodeGPT limitations
+    - "code_review"        # Custom agents can handle this too
+    - "documentation"      # Custom agents provide unlimited usage
+    - "quick_questions"    # Custom agents avoid quota issues
+  
+  # Fallback behavior
+  fallback_to_custom: true  # ALWAYS fallback to custom agents
+  prefer_custom: true       # Prefer custom agents over CodeGPT
+  
+  # Task classification keywords
+  classification:
+    code_review:
+      keywords: ["review", "check", "analyze", "quality", "security", "bug"]
+    documentation:
+      keywords: ["document", "readme", "docs", "comment", "explain"]
+    quick_questions:
+      keywords: ["what", "how", "why", "explain", "help", "question"]
+    project_orchestration:
+      keywords: ["orchestrate", "coordinate", "manage", "plan", "organize"]
+    workflow_automation:
+      keywords: ["workflow", "automation", "pipeline", "process", "batch"]
+
+# Integration settings
+integration:
+  # Prioritize Void Editor integration
+  void_editor:
+    enabled: true
+    priority: 1
+    auto_connect: true
+    websocket_port: 8766
+    
+    # Enhanced Void integration features
+    features:
+      model_optimization: true
+      real_time_sync: true
+      advanced_debugging: true
+      project_management: true
+  
+  # VS Code Insiders for swarm automation
+  vscode_insiders:
+    enabled: false  # Disabled by default (Void has priority)
+    priority: 2
+    swarm_mode: false
+    lead_dev_mode: false
+    websocket_port: 8765
+    
+    # Swarm automation features
+    swarm_features:
+      multi_agent_coordination: true
+      task_delegation: true
+      progress_tracking: true
+      automated_workflows: true
+  
+  # CodeGPT VS Code extension
+  codegpt_extension:
+    enabled: false  # Only enable if using CodeGPT
+    priority: 3
+    sync_with_bridge: true
+
+# Performance optimization for 8GB VRAM systems
+performance:
+  # VRAM management
+  vram_management:
+    enabled: true
+    max_vram_gb: 7.5
+    aggressive_cleanup: true
+    model_rotation: true
+    emergency_fallback: true
+  
+  # Concurrent task limits
+  concurrency:
+    max_codegpt_requests: 3  # Respect API limits
+    max_custom_agents: 2     # Optimize for 8GB VRAM
+    request_timeout: 30
+    
+    # Queue management
+    task_queue_size: 10
+    priority_scheduling: true
+  
+  # Caching for efficiency
+  cache:
+    codegpt_responses: true
+    cache_duration: 300  # 5 minutes
+    max_cache_size: 100
+    
+    # Model caching
+    model_cache_enabled: true
+    model_cache_size: 2  # Number of models to keep loaded
+
+# Monitoring and logging
+monitoring:
+  # Agent performance tracking
+  track_performance: true
+  log_all_interactions: true
+  performance_metrics_interval: 60  # seconds
+  
+  # Dashboard integration
+  dashboard:
+    show_codegpt_stats: true
+    show_routing_decisions: true
+    show_performance_metrics: true
+    show_vram_usage: true
+    
+    # Real-time updates
+    update_interval: 5  # seconds
+    auto_refresh: true
+  
+  # Alerts and notifications
+  alerts:
+    codegpt_api_failures: true
+    routing_fallbacks: true
+    performance_degradation: true
+    vram_pressure: true
+    
+    # Alert thresholds
+    thresholds:
+      response_time_ms: 5000
+      error_rate_percent: 10
+      vram_usage_percent: 90
+
+# Cost optimization (important for CodeGPT usage)
+cost_optimization:
+  # Minimize CodeGPT usage to avoid costs
+  prefer_local_models: true
+  cache_expensive_requests: true
+  
+  # Usage tracking
+  track_api_usage: true
+  daily_usage_limit: 50  # Requests per day
+  warn_on_usage_threshold: 80  # Percent of limit
+  
+  # Fallback strategies
+  fallback_on_quota_exceeded: true
+  fallback_on_cost_threshold: true
+
+# Development and debugging
+development:
+  debug_mode: false
+  verbose_logging: false
+  
+  # Testing features
+  mock_codegpt_responses: false  # For testing without API calls
+  simulate_api_failures: false   # For resilience testing
+  
+  # Development tools
+  enable_profiling: false
+  performance_benchmarks: false
+
+# Recommended configuration for most users
+recommendations:
+  # For users without CodeGPT subscription
+  free_tier_config:
+    codegpt_enabled: false
+    use_custom_agents_only: true
+    enable_all_local_providers: true
+    
+  # For users with CodeGPT subscription
+  paid_tier_config:
+    codegpt_enabled: true
+    hybrid_routing: true
+    cost_monitoring: true
+    
+  # For development/testing
+  development_config:
+    debug_mode: true
+    verbose_logging: true
+    mock_responses: true

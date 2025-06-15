@@ -1,0 +1,148 @@
+{
+  "providers": {
+    "ollama": {
+      "base_url": "http://localhost:11434",
+      "enabled": true,
+      "models": [
+        "stable-code:3b",
+        "cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+        "phi:2.7b",
+        "mistral-small:latest",
+        "llama4:16x17b",
+        "magistral:24b",
+        "devstral:24b",
+        "qwen3:8b",
+        "gemma3:4b",
+        "phi4:14b",
+        "deepseek-r1:latest"
+      ]
+    },
+    "lmstudio": {
+      "base_url": "http://localhost:1234",
+      "enabled": true,
+      "models": [
+        "dolly-v2-3b",
+        "mistralai/devstral-small-2505",
+        "phi-2",
+        "mistral-small-3.1-24b-instruct-2503",
+        "vvsotnikov_-_stablelm-tuned-alpha-3b",
+        "codellama-3.2-3b",
+        "gemma-2b-it",
+        "codellama-7b-instruct",
+        "starcoder2-7b",
+        "qwen/qwen2.5-vl-7b",
+        "google/gemma-3-12b",
+        "text-embedding-nomic-embed-text-v1.5"
+      ]
+    }
+  },
+  "agent_assignments": {
+    "architect": {
+      "primary": [
+        "lmstudio/dolly-v2-3b",
+        "lmstudio/mistralai/devstral-small-2505"
+      ],
+      "fallback": [
+        "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+        "ollama/phi:2.7b"
+      ]
+    },
+    "backend_dev": {
+      "primary": [
+        "lmstudio/codellama-3.2-3b",
+        "lmstudio/codellama-7b-instruct"
+      ],
+      "fallback": [
+        "ollama/stable-code:3b",
+        "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M"
+      ]
+    },
+    "frontend_dev": {
+      "primary": [
+        "lmstudio/codellama-3.2-3b",
+        "lmstudio/codellama-7b-instruct"
+      ],
+      "fallback": [
+        "ollama/stable-code:3b",
+        "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M"
+      ]
+    },
+    "qa_analyst": {
+      "primary": [
+        "lmstudio/dolly-v2-3b",
+        "lmstudio/mistralai/devstral-small-2505"
+      ],
+      "fallback": [
+        "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+        "ollama/phi:2.7b"
+      ]
+    },
+    "orchestrator": {
+      "primary": [
+        "lmstudio/dolly-v2-3b",
+        "lmstudio/mistralai/devstral-small-2505"
+      ],
+      "fallback": [
+        "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+        "ollama/phi:2.7b"
+      ]
+    }
+  },
+  "performance_optimization": {
+    "load_balancing": true,
+    "adaptive_selection": true,
+    "thresholds": {
+      "max_response_time": 10.0,
+      "min_success_rate": 0.8
+    }
+  },
+  "detection_summary": {
+    "total_models": 23,
+    "active_providers": 2,
+    "provider_status": {
+      "ollama": true,
+      "lmstudio": true,
+      "vllm": false,
+      "huggingface": false
+    },
+    "detected_models": {
+      "ollama": [
+        "stable-code:3b",
+        "cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+        "phi:2.7b",
+        "mistral-small:latest",
+        "llama4:16x17b",
+        "magistral:24b",
+        "devstral:24b",
+        "qwen3:8b",
+        "gemma3:4b",
+        "phi4:14b",
+        "deepseek-r1:latest"
+      ],
+      "lmstudio": [
+        "dolly-v2-3b",
+        "mistralai/devstral-small-2505",
+        "phi-2",
+        "mistral-small-3.1-24b-instruct-2503",
+        "vvsotnikov_-_stablelm-tuned-alpha-3b",
+        "codellama-3.2-3b",
+        "gemma-2b-it",
+        "codellama-7b-instruct",
+        "starcoder2-7b",
+        "qwen/qwen2.5-vl-7b",
+        "google/gemma-3-12b",
+        "text-embedding-nomic-embed-text-v1.5"
+      ],
+      "vllm": [],
+      "huggingface": []
+    },
+    "recommendations": [
+      {
+        "type": "missing_provider",
+        "provider": "vLLM",
+        "message": "vLLM not running. Consider setting up vLLM for high-performance inference.",
+        "action": "Install vLLM and start server with a compatible model"
+      }
+    ]
+  }
+}

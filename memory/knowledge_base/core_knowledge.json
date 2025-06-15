@@ -1,0 +1,91 @@
+{
+  "software_architecture": {
+    "patterns": [
+      "MVC",
+      "MVP",
+      "MVVM",
+      "Microservices",
+      "Event-Driven",
+      "Layered"
+    ],
+    "principles": [
+      "SOLID",
+      "DRY",
+      "KISS",
+      "YAGNI",
+      "Separation of Concerns"
+    ],
+    "technologies": {
+      "frontend": [
+        "React",
+        "Vue",
+        "Angular",
+        "TypeScript",
+        "CSS-in-JS"
+      ],
+      "backend": [
+        "Node.js",
+        "Python",
+        "Java",
+        "FastAPI",
+        "Express"
+      ],
+      "database": [
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "Elasticsearch"
+      ],
+      "infrastructure": [
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Azure",
+        "GCP"
+      ]
+    }
+  },
+  "testing_strategies": {
+    "types": [
+      "Unit",
+      "Integration",
+      "E2E",
+      "Performance",
+      "Security"
+    ],
+    "frameworks": [
+      "Jest",
+      "Cypress",
+      "Playwright",
+      "Selenium",
+      "JMeter"
+    ],
+    "best_practices": [
+      "Test-Driven Development",
+      "Behavior-Driven Development",
+      "Continuous Testing"
+    ]
+  },
+  "project_management": {
+    "methodologies": [
+      "Agile",
+      "Scrum",
+      "Kanban",
+      "DevOps",
+      "Lean"
+    ],
+    "tools": [
+      "Jira",
+      "Trello",
+      "GitHub",
+      "Jenkins",
+      "Docker"
+    ],
+    "metrics": [
+      "Velocity",
+      "Lead Time",
+      "Cycle Time",
+      "Quality Score"
+    ]
+  }
+}

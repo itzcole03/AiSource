@@ -1,0 +1,37 @@
+{
+  "workspaces": [
+    {
+      "path": "C:\\Users\\bcmad\\Downloads\\project-bolt-withastro-astro-tczzygud\\project\\project\\ultimate_copilot",
+      "name": "Ultimate Copilot Project",
+      "type": "python",
+      "status": "in_use",
+      "description": "",
+      "language": "",
+      "framework": "",
+      "last_accessed": "2025-06-14T13:46:06.982084",
+      "agent_count": 1,
+      "file_count": 0,
+      "size_mb": 0.0,
+      "git_repo": true,
+      "git_branch": "main",
+      "metadata": {}
+    },
+    {
+      "path": "C:\\Users\\bcmad\\Downloads\\project-bolt-withastro-astro-tczzygud\\project\\project",
+      "name": "Parent Directory",
+      "type": "general",
+      "status": "in_use",
+      "description": "",
+      "language": "",
+      "framework": "",
+      "last_accessed": "2025-06-14T13:46:17.052399",
+      "agent_count": 1,
+      "file_count": 0,
+      "size_mb": 0.0,
+      "git_repo": false,
+      "git_branch": "",
+      "metadata": {}
+    }
+  ],
+  "last_updated": "2025-06-14T13:47:48.992916"
+}

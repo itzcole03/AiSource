@@ -1,0 +1,1 @@
+Content generation requires local model - please start Ollama/LM Studio

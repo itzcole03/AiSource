@@ -1,0 +1,23 @@
+{
+  "role": "Backend Developer",
+  "expertise": [
+    "api_development",
+    "database_design",
+    "microservices",
+    "performance_optimization"
+  ],
+  "memory_focus": [
+    "code_patterns",
+    "api_designs",
+    "database_schemas",
+    "performance_metrics"
+  ],
+  "learning_style": "implementation_focused",
+  "collaboration_patterns": [
+    "code_review",
+    "api_integration",
+    "database_optimization"
+  ],
+  "created": "2025-06-13T19:20:02.222037",
+  "memory_initialized": true
+}

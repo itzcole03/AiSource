@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Debug</title>
+</head>
+<body>
+    <h1>Frontend Backend Discovery Debug</h1>
+    <div id="debug-output"></div>
+    
+    <script type="module">
+        const debugOutput = document.getElementById('debug-output');
+        
+        async function debugBackendConnection() {
+            debugOutput.innerHTML += '<h2>🔍 Frontend Backend Discovery Test</h2>';
+            
+            try {
+                // Step 1: Check config file reading
+                debugOutput.innerHTML += '<p>📋 Reading backend config...</p>';
+                const configResponse = await fetch('/backend_config.json', { cache: 'no-cache' });
+                const config = await configResponse.json();
+                debugOutput.innerHTML += `<p>✅ Config: ${JSON.stringify(config)}</p>`;
+                
+                const backendUrl = `http://127.0.0.1:${config.backend_port}`;
+                debugOutput.innerHTML += `<p>🎯 Backend URL: ${backendUrl}</p>`;
+                
+                // Step 2: Test provider status
+                debugOutput.innerHTML += '<p>📊 Testing provider status...</p>';
+                const statusResponse = await fetch(`${backendUrl}/providers/status`, { cache: 'no-cache' });
+                const statusData = await statusResponse.json();
+                debugOutput.innerHTML += `<p>📊 Provider Status Response:</p><pre>${JSON.stringify(statusData, null, 2)}</pre>`;
+                
+                // Step 3: Test LM Studio models specifically  
+                debugOutput.innerHTML += '<p>🔍 Testing LM Studio models...</p>';
+                const lmstudioResponse = await fetch(`${backendUrl}/providers/lmstudio/models`, { cache: 'no-cache' });
+                const lmstudioData = await lmstudioResponse.json();
+                debugOutput.innerHTML += `<p>📋 LM Studio Response:</p><pre>${JSON.stringify(lmstudioData, null, 2)}</pre>`;
+                
+                // Step 4: Test Ollama models
+                debugOutput.innerHTML += '<p>🔍 Testing Ollama models...</p>';
+                const ollamaResponse = await fetch(`${backendUrl}/providers/ollama/models`, { cache: 'no-cache' });
+                const ollamaData = await ollamaResponse.json();
+                debugOutput.innerHTML += `<p>📋 Ollama Response:</p><pre>${JSON.stringify(ollamaData, null, 2)}</pre>`;
+                
+                debugOutput.innerHTML += '<h3>✅ Debug Complete - Check responses above</h3>';
+                
+            } catch (error) {
+                debugOutput.innerHTML += `<p>❌ Error: ${error.message}</p>`;
+                console.error('Debug error:', error);
+            }
+        }
+        
+        debugBackendConnection();
+    </script>
+</body>
+</html>

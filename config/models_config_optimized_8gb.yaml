@@ -1,0 +1,201 @@
+# Optimized Models Configuration for 8GB VRAM System
+# This configuration prioritizes smaller, efficient models that can run within VRAM constraints
+
+providers:
+  ollama:
+    base_url: "http://localhost:11434"
+    enabled: true
+    models:
+      # Small efficient models (2-4GB VRAM each)
+      stable-code:3b:
+        model_id: "stable-code:3b"
+        vram_usage: "3GB"
+        capabilities: ["code_generation", "code_completion"]
+        optimal_for: ["frontend_dev", "backend_dev"]
+      
+      phi:2.7b:
+        model_id: "phi:2.7b"
+        vram_usage: "2.5GB"
+        capabilities: ["reasoning", "general_tasks"]
+        optimal_for: ["qa_analyst", "orchestrator"]
+      
+      gemma3:4b:
+        model_id: "gemma3:4b"
+        vram_usage: "3.5GB"
+        capabilities: ["reasoning", "code_analysis"]
+        optimal_for: ["architect", "qa_analyst"]
+      
+      qwen3:8b:
+        model_id: "qwen3:8b"
+        vram_usage: "6GB"
+        capabilities: ["advanced_reasoning", "complex_tasks"]
+        optimal_for: ["orchestrator", "architect"]
+        note: "Use only when no other models are loaded"
+      
+      deepseek-r1:latest:
+        model_id: "deepseek-r1:latest"
+        vram_usage: "4GB"
+        capabilities: ["code_generation", "debugging"]
+        optimal_for: ["backend_dev", "frontend_dev"]
+
+  lmstudio:
+    base_url: "http://localhost:1234"
+    enabled: true
+    models:
+      # Prioritize smaller models for concurrent usage
+      phi-2:
+        model_id: "phi-2"
+        vram_usage: "2GB"
+        capabilities: ["reasoning", "code_assistance"]
+        optimal_for: ["qa_analyst"]
+      
+      gemma-2b-it:
+        model_id: "gemma-2b-it"
+        vram_usage: "2GB"
+        capabilities: ["conversation", "general_tasks"]
+        optimal_for: ["orchestrator"]
+      
+      codellama-3.2-3b:
+        model_id: "codellama-3.2-3b"
+        vram_usage: "3GB"
+        capabilities: ["code_generation", "code_completion"]
+        optimal_for: ["backend_dev", "frontend_dev"]
+      
+      dolly-v2-3b:
+        model_id: "dolly-v2-3b"
+        vram_usage: "3GB"
+        capabilities: ["instruction_following", "general_tasks"]
+        optimal_for: ["workspace"]
+
+  vllm:
+    base_url: "http://localhost:8000"
+    enabled: true
+    wsl_command: "wsl -d Ubuntu"
+    models:
+      # Use only when specifically needed for high-performance tasks
+      # These will be loaded on-demand and unloaded after use
+      efficient-model:
+        model_id: "microsoft/phi-2"
+        vram_usage: "2.5GB"
+        capabilities: ["reasoning", "code_assistance"]
+        optimal_for: ["qa_analyst"]
+        load_strategy: "on_demand"
+
+# Agent assignments optimized for 8GB VRAM
+agent_assignments:
+  architect:
+    primary: ["ollama/gemma3:4b", "ollama/phi:2.7b"]
+    fallback: ["lmstudio/phi-2"]
+    max_concurrent: 1
+    task_specific:
+      system_design: ["ollama/qwen3:8b"]  # Load only when needed
+      architecture_review: ["ollama/gemma3:4b"]
+      
+  backend_dev:
+    primary: ["ollama/stable-code:3b", "ollama/deepseek-r1:latest"]
+    fallback: ["lmstudio/codellama-3.2-3b"]
+    max_concurrent: 1
+    task_specific:
+      api_development: ["ollama/stable-code:3b"]
+      database_design: ["ollama/deepseek-r1:latest"]
+      
+  frontend_dev:
+    primary: ["ollama/stable-code:3b", "lmstudio/codellama-3.2-3b"]
+    fallback: ["ollama/deepseek-r1:latest"]
+    max_concurrent: 1
+    task_specific:
+      ui_design: ["ollama/phi:2.7b"]
+      component_development: ["ollama/stable-code:3b"]
+      
+  qa_analyst:
+    primary: ["ollama/phi:2.7b", "lmstudio/phi-2"]
+    fallback: ["ollama/gemma3:4b"]
+    max_concurrent: 1
+    task_specific:
+      test_planning: ["ollama/gemma3:4b"]
+      code_review: ["ollama/phi:2.7b"]
+      
+  orchestrator:
+    primary: ["ollama/gemma3:4b", "lmstudio/gemma-2b-it"]
+    fallback: ["ollama/phi:2.7b"]
+    max_concurrent: 1
+    task_specific:
+      complex_planning: ["ollama/qwen3:8b"]  # Load only when needed
+      task_coordination: ["ollama/gemma3:4b"]
+    
+  workspace:
+    primary: ["lmstudio/dolly-v2-3b", "ollama/phi:2.7b"]
+    fallback: ["lmstudio/phi-2"]
+    max_concurrent: 1
+
+# VRAM-aware performance optimization
+performance_optimization:
+  load_balancing: true
+  adaptive_selection: true
+  vram_management: true
+  model_rotation: true  # Rotate models to prevent VRAM exhaustion
+  
+  thresholds:
+    max_response_time: 15.0  # Allow longer times for resource-constrained environment
+    min_success_rate: 0.8
+    max_vram_usage: 7.5  # Keep 0.5GB free for system
+    
+  vram_strategies:
+    # Strategy for managing limited VRAM
+    single_large_model: true    # Only one large model (6GB+) at a time
+    prefer_small_models: true   # Prefer models under 4GB
+    auto_unload: true          # Automatically unload unused models
+    load_on_demand: true       # Load heavy models only when needed
+    
+  model_rotation:
+    # Rotate between models to prevent memory issues
+    rotation_interval: 300     # 5 minutes
+    cooldown_period: 60        # 1 minute between switches
+    prefer_loaded: true        # Prefer already loaded models
+
+# Task-specific model preferences for 8GB VRAM
+task_model_preferences:
+  code_generation:
+    primary: ["ollama/stable-code:3b", "ollama/deepseek-r1:latest"]
+    avoid_concurrent: ["ollama/qwen3:8b"]  # Too large for concurrent use
+    
+  code_review:
+    primary: ["ollama/phi:2.7b", "lmstudio/phi-2"]
+    max_models: 2  # Maximum 2 models for this task type
+    
+  documentation:
+    primary: ["ollama/gemma3:4b", "lmstudio/gemma-2b-it"]
+    
+  architecture:
+    primary: ["ollama/gemma3:4b"]
+    special_case: ["ollama/qwen3:8b"]  # Use only for complex architecture tasks
+    
+  testing:
+    primary: ["ollama/phi:2.7b", "lmstudio/phi-2"]
+    
+  debugging:
+    primary: ["ollama/deepseek-r1:latest", "ollama/stable-code:3b"]
+
+# Resource monitoring and alerts
+resource_monitoring:
+  vram_alerts: true
+  performance_degradation_alerts: true
+  model_switching_alerts: false  # Reduce noise
+  
+  alert_thresholds:
+    vram_usage: 7.0  # Alert when VRAM usage exceeds 7GB
+    response_time: 20.0  # Alert when response time exceeds 20s
+    memory_pressure: true  # Alert on memory pressure
+
+# Model loading strategies
+model_loading:
+  preload_essential: ["ollama/phi:2.7b", "lmstudio/phi-2"]  # Always keep these loaded
+  lazy_load: ["ollama/qwen3:8b"]  # Load only when specifically requested
+  auto_unload_timeout: 600  # Unload unused models after 10 minutes
+  
+# Emergency fallback configuration
+emergency_fallback:
+  # If VRAM is exhausted, fall back to these lightweight models
+  models: ["lmstudio/phi-2", "ollama/phi:2.7b"]
+  unload_strategy: "largest_first"  # Unload largest models first
+  recovery_time: 30  # Wait 30s before attempting to reload models

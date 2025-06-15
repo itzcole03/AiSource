@@ -1,0 +1,192 @@
+# Ultimate Copilot System Configuration Example
+# Copy this file to system_config.yaml and customize for your environment
+
+system:
+  name: "Ultimate Copilot Swarm"
+  version: "2.1.0"
+  debug: true
+  auto_start: true
+
+# LLM Provider Configuration
+llm_providers:
+  # Hugging Face (requires API key)
+  huggingface:
+    api_key: "${HUGGINGFACE_API_KEY}"  # Set in environment variables
+    base_url: "https://api-inference.huggingface.co/models"
+    models:
+      - "microsoft/DialoGPT-medium"
+      - "microsoft/CodeBERT-base"
+      - "bigcode/starcoder"
+  
+  # Ollama (local models - recommended)
+  ollama:
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    enabled: true
+    models:
+      - "llama3"
+      - "codellama"
+      - "mistral"
+      - "deepseek-coder"
+      - "starcoder"
+  
+  # LM Studio (local models)
+  lmstudio:
+    base_url: "http://localhost:1234"
+    enabled: true
+    models:
+      - "deepseek-coder"
+      - "hermes-mistral"
+  
+  # vLLM (high-performance local inference)
+  vllm:
+    base_url: "http://localhost:8000"
+    enabled: false  # Enable if you have vLLM set up
+    models:
+      - "mistral-7b"
+      - "phi-2"
+  
+  # OpenRouter (cloud fallback)
+  openrouter:
+    api_key: "${OPENROUTER_API_KEY}"  # Optional
+    base_url: "https://openrouter.ai/api/v1"
+    models:
+      - "anthropic/claude-3-sonnet"
+      - "google/gemini-pro"
+
+# Agent Configuration
+agents:
+  architect:
+    model: "ollama/llama3"  # Primary model
+    role: "System Architecture & Design"
+    capabilities: ["design", "planning", "architecture"]
+    
+  backend_dev:
+    model: "ollama/codellama"
+    role: "Backend Development"
+    capabilities: ["coding", "api_design", "database"]
+    
+  frontend_dev:
+    model: "ollama/codellama"
+    role: "Frontend Development"
+    capabilities: ["ui", "react", "typescript"]
+    
+  qa_analyst:
+    model: "ollama/llama3"
+    role: "Quality Assurance"
+    capabilities: ["testing", "validation", "review"]
+    
+  orchestrator:
+    model: "ollama/mistral"
+    role: "Task Orchestration"
+    capabilities: ["coordination", "planning", "management"]
+  
+  workspace:
+    model: "ollama/codellama"
+    role: "Workspace Management"
+    capabilities: ["file_operations", "code_analysis", "workspace_management"]
+
+# Memory Configuration
+memory:
+  provider: "qdrant"  # Options: "qdrant", "json", "sqlite"
+  host: "localhost"
+  port: 6333
+  collection_name: "agent_memory"
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  
+  # Fallback to JSON if Qdrant not available
+  fallback:
+    provider: "json"
+    file: "memory/memory.json"
+
+# Task Configuration
+tasks:
+  auto_load: true
+  max_concurrent: 3
+  retry_attempts: 2
+  timeout: 300  # seconds
+  
+# Logging Configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  format: "[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s"
+  file: "logs/system.log"
+  max_size: "10MB"
+  backup_count: 5
+
+# Integration Configuration
+integrations:
+  # Void Editor (Priority #1)
+  void_editor:
+    enabled: true
+    websocket_port: 8766
+    api_url: "http://localhost:3000"
+    auto_optimize: true
+    model_switching: true
+    token_optimization: true
+    performance_monitoring: true
+    
+    # Model optimization settings
+    optimization:
+      auto_select: true
+      performance_threshold: 0.8
+      response_time_limit: 3.0
+      token_efficiency_target: 0.9
+      switch_cooldown: 30  # seconds
+      
+    # Model preferences by task type
+    model_preferences:
+      code_generation:
+        primary: ["codellama", "deepseek-coder", "starcoder"]
+        fallback: ["llama3", "mistral"]
+      code_review:
+        primary: ["deepseek-coder", "codellama"]
+        fallback: ["llama3"]
+      documentation:
+        primary: ["llama3", "mistral"]
+        fallback: ["codellama"]
+      architecture:
+        primary: ["llama3", "mistral"]
+        fallback: ["codellama"]
+      testing:
+        primary: ["codellama", "deepseek-coder"]
+        fallback: ["llama3"]
+  
+  # VS Code Integration (Secondary)
+  vscode:
+    enabled: false  # Disabled by default (Void has priority)
+    websocket_port: 8765
+    auto_sync: true
+    
+    # VS Code Insiders for swarm automation
+    insiders:
+      enabled: false
+      swarm_mode: false
+      lead_dev_mode: false
+
+# VRAM Optimization (8GB systems)
+vram:
+  max_usage_gb: 7.5  # Leave 0.5GB for system
+  enable_model_rotation: true
+  aggressive_cleanup: true
+  monitor_interval: 30  # seconds
+  
+  # Model size estimates (GB)
+  model_sizes:
+    "ollama/llama3": 4.0
+    "ollama/codellama": 4.0
+    "ollama/mistral": 4.0
+    "ollama/deepseek-coder": 4.0
+    "lmstudio/phi-2": 2.0
+
+# Performance Monitoring
+monitoring:
+  enabled: true
+  dashboard_port: 8501
+  metrics_interval: 60  # seconds
+  health_check_interval: 30  # seconds
+  
+# Security Settings
+security:
+  api_key_validation: true
+  workspace_sandboxing: true
+  log_sanitization: true

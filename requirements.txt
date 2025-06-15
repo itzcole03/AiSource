@@ -1,0 +1,45 @@
+# Core dependencies
+fastapi>=0.104.0
+uvicorn>=0.24.0
+streamlit>=1.28.0
+plotly>=5.17.0
+pandas>=2.1.0
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# LLM and AI dependencies
+huggingface-hub>=0.17.0
+sentence-transformers>=2.2.0
+aiohttp>=3.9.0
+requests>=2.31.0
+
+# Memory and database
+qdrant-client>=1.6.0
+
+# File operations and workspace integration
+aiofiles>=23.2.1
+watchdog>=3.0.0
+websockets>=11.0.2
+
+# System monitoring and optimization
+psutil>=5.9.0
+gputil>=1.4.0
+
+# Communication and networking
+asyncio-mqtt>=0.11.0
+
+# Development and testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.0.0
+isort>=5.12.0
+flake8>=6.0.0
+
+# Optional dependencies for enhanced features
+# Uncomment as needed:
+# openai>=1.0.0
+# anthropic>=0.7.0
+# google-cloud-aiplatform>=1.38.0
+
+# For VRAM monitoring (Windows-specific)
+wmi>=1.5.1; sys_platform == "win32"

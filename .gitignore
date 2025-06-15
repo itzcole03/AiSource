@@ -1,0 +1,77 @@
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+*.log
+*.sqlite3
+*.db
+*.tmp
+*.bak
+*.swp
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints/
+
+# === Virtual Environments ===
+env/
+venv/
+.vllm_env/
+vllm_env/
+.venv/
+
+# === VSCode / JetBrains / IDEs ===
+.vscode/
+.idea/
+*.code-workspace
+
+# === OS / Misc ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# === Environment / Secrets ===
+.env
+.env.*
+.secret
+*.pem
+*.key
+*.crt
+
+# === Node / Frontend (if applicable) ===
+node_modules/
+dist/
+build/
+*.lock
+*.log
+
+# === Streamlit ===
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# === Compiled or build artifacts ===
+*.exe
+*.dll
+*.class
+*.o
+*.a
+*.out
+
+# === LLM Cache / Qdrant / Logs ===
+.qdrant/
+qdrant_data/
+logs/
+log/
+*.jsonl
+
+# === Git ===
+*.orig
+*.patch
+*.rej

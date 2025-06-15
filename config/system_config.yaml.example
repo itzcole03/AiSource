@@ -1,0 +1,141 @@
+# Ultimate Copilot System Configuration Example
+# Copy this file to system_config.yaml and customize for your setup
+
+# System Configuration
+system:
+  name: "Ultimate Copilot"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  max_concurrent_tasks: 10
+  task_timeout: 300  # seconds
+
+# VRAM Management
+vram:
+  max_usage_percentage: 80  # Maximum VRAM usage (80% for safety)
+  warning_threshold: 70     # Warning when VRAM usage exceeds this
+  cleanup_threshold: 85     # Emergency cleanup threshold
+  model_rotation_enabled: true
+  cache_size_mb: 1024      # Model cache size in MB
+
+# Model Providers Configuration
+providers:
+  # Local Providers (Recommended for 8GB VRAM)
+  ollama:
+    enabled: true
+    base_url: "http://localhost:11434"
+    models:
+      - "llama3.2:3b"      # Lightweight for coding
+      - "codellama:7b"     # Code-specific model
+      - "mistral:7b"       # General purpose
+    default_model: "llama3.2:3b"
+    
+  lm_studio:
+    enabled: false
+    base_url: "http://localhost:1234"
+    models: []
+    
+  vllm:
+    enabled: false
+    base_url: "http://localhost:8000"
+    models: []
+
+  # Cloud Providers (Fallback/Premium features)
+  openai:
+    enabled: false
+    api_key: "${OPENAI_API_KEY}"  # Set in environment
+    models:
+      - "gpt-4o-mini"
+      - "gpt-3.5-turbo"
+    default_model: "gpt-4o-mini"
+    
+  anthropic:
+    enabled: false
+    api_key: "${ANTHROPIC_API_KEY}"
+    models:
+      - "claude-3-haiku-20240307"
+    default_model: "claude-3-haiku-20240307"
+    
+  google:
+    enabled: false
+    api_key: "${GOOGLE_API_KEY}"
+    models:
+      - "gemini-pro"
+    default_model: "gemini-pro"
+
+# Agent Configuration
+agents:
+  orchestrator:
+    enabled: true
+    model_preference: ["ollama", "openai"]
+    
+  architect:
+    enabled: true
+    model_preference: ["ollama", "anthropic"]
+    
+  backend:
+    enabled: true
+    model_preference: ["ollama", "openai"]
+    
+  frontend:
+    enabled: true
+    model_preference: ["ollama", "openai"]
+    
+  qa:
+    enabled: true
+    model_preference: ["ollama", "anthropic"]
+
+# Integration Settings
+integrations:
+  void_editor:
+    enabled: true
+    websocket_port: 8765
+    auto_connect: true
+    file_sync: true
+    
+  vscode:
+    enabled: true
+    extension_enabled: false  # Enable if VS Code extension is installed
+    insiders_mode: true      # Use VS Code Insiders for latest features
+    
+  codegpt:
+    enabled: false           # Enable if CodeGPT subscription available
+    api_key: "${CODEGPT_API_KEY}"
+    marketplace_sync: false
+
+# Dashboard Configuration
+dashboard:
+  enabled: true
+  port: 8501
+  auto_open: true
+  refresh_interval: 5  # seconds
+
+# Memory Management
+memory:
+  enabled: true
+  max_memory_mb: 2048      # Maximum memory for conversation history
+  cleanup_interval: 3600   # Cleanup interval in seconds
+  persistence: true        # Save memory to disk
+
+# Plugin System
+plugins:
+  enabled: true
+  auto_load: true
+  directories:
+    - "plugins/model_providers"
+    - "plugins/integrations"
+    - "plugins/agents"
+
+# Performance Tuning
+performance:
+  async_workers: 4
+  request_timeout: 30
+  retry_attempts: 3
+  batch_processing: true
+  
+# Security Settings
+security:
+  validate_inputs: true
+  sanitize_outputs: true
+  workspace_sandbox: true
+  api_rate_limiting: false

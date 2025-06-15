@@ -1,0 +1,20 @@
+{
+  "environments": {
+    "development": {
+      "port": 8000,
+      "debug": true,
+      "auto_reload": true
+    },
+    "production": {
+      "port": 80,
+      "debug": false,
+      "ssl_enabled": true
+    }
+  },
+  "health_checks": {
+    "endpoint": "/health",
+    "timeout_seconds": 30
+  },
+  "created_by": "IntelligentAgent",
+  "created_at": "2025-06-13T15:36:36.014640"
+}

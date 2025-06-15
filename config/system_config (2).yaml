@@ -1,0 +1,134 @@
+# Ultimate Copilot System Configuration
+system:
+  name: "Ultimate Copilot Swarm"
+  version: "2.1.0"
+  debug: true
+  auto_start: true
+  
+# LLM Provider Configuration
+llm_providers:
+  huggingface:
+    api_key: "${HUGGINGFACE_API_KEY}"
+    base_url: "https://api-inference.huggingface.co/models"
+    models:
+      - "microsoft/DialoGPT-medium"
+      - "microsoft/CodeBERT-base"
+      - "bigcode/starcoder"
+  
+  ollama:
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    models:
+      - "llama3"
+      - "codellama"
+      - "mistral"
+      - "deepseek-coder"
+      - "starcoder"
+  
+  openrouter:
+    api_key: "${OPENROUTER_API_KEY}"
+    base_url: "https://openrouter.ai/api/v1"
+    models:
+      - "anthropic/claude-3-sonnet"
+      - "google/gemini-pro"
+
+# Agent Configuration
+agents:
+  architect:
+    model: "huggingface/microsoft/DialoGPT-medium"
+    role: "System Architecture & Design"
+    capabilities: ["design", "planning", "architecture"]
+    
+  backend_dev:
+    model: "ollama/codellama"
+    role: "Backend Development"
+    capabilities: ["coding", "api_design", "database"]
+    
+  frontend_dev:
+    model: "huggingface/bigcode/starcoder"
+    role: "Frontend Development"
+    capabilities: ["ui", "react", "typescript"]
+    
+  qa_analyst:
+    model: "ollama/llama3"
+    role: "Quality Assurance"
+    capabilities: ["testing", "validation", "review"]
+    
+  orchestrator:
+    model: "openrouter/anthropic/claude-3-sonnet"
+    role: "Task Orchestration"
+    capabilities: ["coordination", "planning", "management"]
+  
+  workspace:
+    model: "ollama/codellama"
+    role: "Workspace Management"
+    capabilities: ["file_operations", "code_analysis", "workspace_management"]
+  
+  void_editor:
+    model: "ollama/deepseek-coder"
+    role: "Void Editor Optimization"
+    capabilities: ["model_optimization", "code_suggestions", "performance_monitoring"]
+
+# Memory Configuration
+memory:
+  provider: "qdrant"
+  host: "localhost"
+  port: 6333
+  collection_name: "agent_memory"
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  
+# Task Configuration
+tasks:
+  auto_load: true
+  max_concurrent: 3
+  retry_attempts: 2
+  timeout: 300
+  
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s"
+  file: "logs/system.log"
+  max_size: "10MB"
+  backup_count: 5
+
+# Integration Configuration
+integrations:
+  vscode:
+    enabled: true
+    websocket_port: 8765
+    auto_sync: true
+    
+  void_editor:
+    enabled: true
+    websocket_port: 8766
+    api_url: "http://localhost:3000"
+    auto_optimize: true
+    model_switching: true
+    token_optimization: true
+    performance_monitoring: true
+    
+    # Model optimization settings
+    optimization:
+      auto_select: true
+      performance_threshold: 0.8
+      response_time_limit: 3.0
+      token_efficiency_target: 0.9
+      switch_cooldown: 30  # seconds
+      
+    # Model preferences by task type
+    model_preferences:
+      code_generation:
+        primary: ["codellama", "deepseek-coder", "starcoder"]
+        fallback: ["llama3", "mistral"]
+      code_review:
+        primary: ["deepseek-coder", "codellama"]
+        fallback: ["llama3"]
+      documentation:
+        primary: ["llama3", "mistral"]
+        fallback: ["codellama"]
+      architecture:
+        primary: ["llama3", "mistral"]
+        fallback: ["codellama"]
+      testing:
+        primary: ["codellama", "deepseek-coder"]
+        fallback: ["llama3"]

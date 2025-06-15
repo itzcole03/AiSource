@@ -1,0 +1,19 @@
+{
+  "project": "Plan E-commerce Development Project",
+  "timestamp": "20250613_182806",
+  "subtasks": [
+    {
+      "title": "Content generation requires local model - please start Ollama/LM Studio",
+      "agent": "orchestrator",
+      "priority": "medium"
+    }
+  ],
+  "dependencies": [
+    {
+      "description": "Content generation requires local model - please start Ollama/LM Studio",
+      "type": "sequential"
+    }
+  ],
+  "assignments": [],
+  "status": "planned"
+}

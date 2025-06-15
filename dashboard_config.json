@@ -1,0 +1,103 @@
+{
+  "dashboard": {
+    "theme": "default",
+    "refresh_interval": 5,
+    "auto_refresh": true,
+    "window_geometry": "1600x1000",
+    "save_layout": true
+  },
+  "external_app": {
+    "enabled": true,
+    "executable": "C:\\Path\\To\\Your\\ModelProviderApp.exe",
+    "args": ["--dashboard-mode", "--integration"],
+    "working_directory": "C:\\Path\\To\\Your\\App",
+    "communication": "api",
+    "embed_method": "window",
+    "api_endpoint": "http://localhost:8080",
+    "window_title": "Model Provider Control",
+    "auto_launch": true,
+    "sync_interval": 10,
+    "timeout": 30
+  },
+  "plugins": {
+    "model_provider_control": {
+      "enabled": true,
+      "order": 1,
+      "external_integration": true,
+      "show_fallback_controls": true
+    },
+    "system_overview": {
+      "enabled": true,
+      "order": 2,
+      "show_detailed_metrics": true
+    },
+    "workflow_manager": {
+      "enabled": true,
+      "order": 3,
+      "max_concurrent_workflows": 5
+    },
+    "completion_manager": {
+      "enabled": true,
+      "order": 4,
+      "show_history": true
+    }
+  },
+  "providers": {
+    "lmstudio": {
+      "enabled": true,
+      "endpoint": "http://localhost:1234",
+      "priority": 1,
+      "auto_discover": true
+    },
+    "ollama": {
+      "enabled": true,
+      "endpoint": "http://localhost:11434",
+      "priority": 2,
+      "auto_discover": true
+    },
+    "vllm": {
+      "enabled": true,
+      "endpoint": "http://localhost:8000",
+      "priority": 3,
+      "auto_discover": true
+    }
+  },
+  "memory": {
+    "max_vram_mb": 7168,
+    "safety_margin_mb": 512,
+    "auto_unload": true,
+    "monitoring_interval": 5
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "logs/dashboard.log",
+    "max_size_mb": 50,
+    "backup_count": 5
+  },
+  "integration": {
+    "api_server": {
+      "enabled": true,
+      "host": "localhost",
+      "port": 9090,
+      "cors_enabled": true
+    },
+    "webhooks": {
+      "enabled": true,
+      "endpoints": [
+        {
+          "name": "model_status_changed",
+          "url": "http://localhost:8080/webhooks/model-status"
+        },
+        {
+          "name": "provider_connected",
+          "url": "http://localhost:8080/webhooks/provider-connected"
+        }
+      ]
+    },
+    "file_sharing": {
+      "enabled": true,
+      "shared_directory": "shared_data",
+      "sync_interval": 30
+    }
+  }
+}

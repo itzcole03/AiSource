@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-06-14T09:01:38.420453",
+  "total_models": 27,
+  "providers": {
+    "lmstudio": 13,
+    "ollama": 14
+  },
+  "model_types": {
+    "analytical": [
+      "lmstudio/mistralai/mathstral-7b-v0.1"
+    ],
+    "coding": [
+      "lmstudio/codellama-3.2-3b",
+      "lmstudio/codellama-7b-instruct",
+      "lmstudio/starcoder2-7b",
+      "ollama/codellama:latest",
+      "ollama/llama3.2:latest",
+      "ollama/stable-code:3b",
+      "ollama/llama4:16x17b"
+    ],
+    "general": [
+      "lmstudio/gemma-2b-it",
+      "lmstudio/vvsotnikov_-_stablelm-tuned-alpha-3b",
+      "lmstudio/dolly-v2-3b",
+      "lmstudio/phi-2",
+      "lmstudio/mistralai/devstral-small-2505",
+      "lmstudio/qwen/qwen2.5-vl-7b",
+      "lmstudio/google/gemma-3-12b",
+      "lmstudio/text-embedding-nomic-embed-text-v1.5",
+      "ollama/mistral:latest",
+      "ollama/cnmoro/gemma2-2b-it-abliterated:q4_K_M",
+      "ollama/phi:2.7b",
+      "ollama/mistral-small:latest",
+      "ollama/magistral:24b",
+      "ollama/devstral:24b",
+      "ollama/qwen3:8b",
+      "ollama/gemma3:4b",
+      "ollama/phi4:14b",
+      "ollama/deepseek-r1:latest"
+    ],
+    "conversational": [
+      "lmstudio/mistral-small-3.1-24b-instruct-2503"
+    ]
+  },
+  "recommendations": {
+    "architect": {
+      "model": "lmstudio/gemma-2b-it",
+      "reasoning": "gemma-2b-it is a small general model, optimized for general_tasks, speed score: 5/5, quality score: 2/5"
+    },
+    "backend_dev": {
+      "model": "lmstudio/gemma-2b-it",
+      "reasoning": "gemma-2b-it is a small general model, optimized for general_tasks, speed score: 5/5, quality score: 2/5"
+    },
+    "frontend_dev": {
+      "model": "lmstudio/gemma-2b-it",
+      "reasoning": "gemma-2b-it is a small general model, optimized for general_tasks, speed score: 5/5, quality score: 2/5"
+    },
+    "qa_analyst": {
+      "model": "lmstudio/gemma-2b-it",
+      "reasoning": "gemma-2b-it is a small general model, optimized for general_tasks, speed score: 5/5, quality score: 2/5"
+    },
+    "orchestrator": {
+      "model": "lmstudio/gemma-2b-it",
+      "reasoning": "gemma-2b-it is a small general model, optimized for general_tasks, speed score: 5/5, quality score: 2/5"
+    }
+  },
+  "performance_metrics": {},
+  "active_providers": [
+    "lmstudio",
+    "ollama"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "workflow_id": "development_20250614_124647",
+  "execution_time": "2025-06-14T12:46:54.377384",
+  "total_tasks": 6,
+  "successful_tasks": 6,
+  "failed_tasks": 0,
+  "results": [
+    {
+      "task_id": "analyze_requirements",
+      "agent_id": "architect_001",
+      "model_used": "ollama:phi:2.7b",
+      "duration_seconds": 1.004291,
+      "success": true,
+      "error": null
+    },
+    {
+      "task_id": "research_technologies",
+      "agent_id": "researcher_001",
+      "model_used": "ollama:phi:2.7b",
+      "duration_seconds": 1.015668,
+      "success": true,
+      "error": null
+    },
+    {
+      "task_id": "implement_core",
+      "agent_id": "developer_001",
+      "model_used": "ollama:phi:2.7b",
+      "duration_seconds": 1.014173,
+      "success": true,
+      "error": null
+    },
+    {
+      "task_id": "create_tests",
+      "agent_id": "architect_001",
+      "model_used": "ollama:phi:2.7b",
+      "duration_seconds": 1.001444,
+      "success": true,
+      "error": null
+    },
+    {
+      "task_id": "review_code",
+      "agent_id": "architect_001",
+      "model_used": "ollama:phi:2.7b",
+      "duration_seconds": 1.016101,
+      "success": true,
+      "error": null
+    },
+    {
+      "task_id": "optimize_performance",
+      "agent_id": "developer_001",
+      "model_used": "fallback_model",
+      "duration_seconds": 1.011589,
+      "success": true,
+      "error": null
+    }
+  ]
+}

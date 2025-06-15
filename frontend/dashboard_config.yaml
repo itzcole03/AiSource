@@ -1,0 +1,149 @@
+# Ultimate Copilot Unified Dashboard Configuration
+
+dashboard:
+  title: "Ultimate Copilot System"
+  version: "2.0.0"
+  theme: "default"
+  refresh_interval: 30  # seconds
+  auto_refresh: true
+  cache_enabled: true
+  max_history_items: 100
+
+backend:
+  url: "http://127.0.0.1:8001"
+  timeout: 5
+  retry_attempts: 3
+  health_check_interval: 60
+
+plugins:
+  system_monitor:
+    enabled: true
+    order: 1
+    config:
+      show_charts: true
+      chart_history: 100
+      alert_thresholds:
+        cpu_percent: 80
+        memory_percent: 85
+        vram_percent: 90
+  
+  model_manager:
+    enabled: true
+    order: 2
+    config:
+      supported_providers:
+        - "ollama"
+        - "lmstudio" 
+        - "vllm"
+        - "openai"
+      default_provider: "ollama"
+      auto_discovery: true
+  
+  agent_manager:
+    enabled: true
+    order: 3
+    config:
+      max_agents: 10
+      auto_cleanup: true
+      default_agent_type: "general"
+  
+  external_integrations:
+    enabled: true
+    order: 4
+    config:
+      vscode_integration: true
+      void_editor_integration: true
+      api_endpoints: true
+
+ui:
+  layout: "wide"
+  sidebar_state: "expanded"
+  show_status_bar: true
+  show_metrics_cards: true
+  enable_dark_theme: false
+  custom_css: true
+
+monitoring:
+  enable_real_time: true
+  websocket_enabled: true
+  update_frequency: 5  # seconds
+  log_level: "INFO"
+  max_log_lines: 1000
+
+performance:
+  enable_caching: true
+  cache_ttl: 300  # seconds
+  max_concurrent_requests: 5
+  request_timeout: 10
+  
+providers:
+  ollama:
+    enabled: true
+    endpoint: "http://localhost:11434"
+    priority: 1
+    health_check: true
+    models:
+      - "llama3.2:3b"
+      - "phi:2.7b"
+      - "codellama:7b"
+  
+  lmstudio:
+    enabled: true  
+    endpoint: "http://localhost:1234"
+    priority: 2
+    health_check: true
+    models:
+      - "phi-2"
+      - "llama-2-7b-chat"
+  
+  vllm:
+    enabled: true
+    endpoint: "http://localhost:8000" 
+    priority: 3
+    health_check: true
+    models:
+      - "microsoft/phi-2"
+      - "meta-llama/Llama-2-7b-chat-hf"
+  
+  openai:
+    enabled: false
+    endpoint: "https://api.openai.com/v1"
+    priority: 4
+    health_check: false
+    api_key_required: true
+
+external_apps:
+  model_provider_control:
+    enabled: true
+    executable: ""  # Path to external app
+    auto_launch: false
+    integration_method: "api"
+    api_endpoint: "http://localhost:8080"
+  
+  vscode:
+    enabled: true
+    websocket_port: 8765
+    auto_connect: true
+  
+  void_editor:
+    enabled: true
+    websocket_port: 7900
+    auto_connect: true
+
+alerts:
+  enabled: true
+  email_notifications: false
+  webhook_url: ""
+  alert_rules:
+    - name: "High CPU Usage"
+      condition: "cpu_percent > 90"
+      severity: "warning"
+    - name: "High Memory Usage"
+      condition: "memory_percent > 90"
+      severity: "critical"
+    - name: "VRAM Full"
+      condition: "vram_percent > 95"
+      severity: "critical"
+    - name: "Backend Disconnected"
+      condition: "backend_status == false"
+      severity: "error"
